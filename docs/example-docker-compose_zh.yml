@@ -25,8 +25,8 @@ services:
         # TARGET是容器的路径，录制将存储的地方
         target: /opt/records
     environment:
-      #      日志级别，默认为info。调试日志对于调试非常有用，但可能非常冗长。 遇到问题时，您可以将其更改为debug。
-      # - LOG_LEVEL=debug
+      # 日志级别，默认为info。调试日志对于调试非常有用，但可能非常冗长。 遇到问题时，您可以将其更改为debug。
+      - LOG_LEVEL=INFO
       # 容器数据库路径，请确保路径是绑定到主机的容器路径
       - DB_PATH=/opt/records
       # JWT密钥，您可以将其更改为任何您喜欢的字符串
@@ -52,6 +52,11 @@ services:
     environment:
       # 后端api url，由容器名称和端口组成。 如果您不知道自己在做什么，请不要更改它。
       - API_URL=http://backend:12555/api
+      # WS_API_URL，客户端websocket url。 用于实时状态更新。 如果您不知道自己在做什么，请不要更改它。
+      # 这应该使用部署服务器的ip地址。
+      # 例如，以下是使用localhost的示例，您可以将其更改为部署服务器的ip地址。
+      # 例如，如果后端部署在12.12.12.12的服务器上，端口为12555，则应将其更改为 ws://12.12.12.12:12555/live/update
+      - WS_API_URL=ws://localhost:12555/live/update
       # 加密密钥，用于next-auth，您可以将其更改为任何您喜欢的字符串
       - NEXTAUTH_SECRET=21312312
       # NEXTAUTH_URL，服务器URL。 如果您不知道自己在做什么，请不要更改它。
@@ -59,8 +64,3 @@ services:
       # 即使您将前端部署在不同的服务器上，也不需要更改它。
       # 确保端口与前端端口相同。
       - NEXTAUTH_URL=http://localhost:15275/
-      # WS_API_URL，客户端websocket url。 用于实时状态更新。 如果您不知道自己在做什么，请不要更改它。
-      # 这应该使用部署服务器的ip地址。
-      # 例如，以下是使用localhost的示例，您可以将其更改为部署服务器的ip地址。
-      # 例如，如果后端部署在12.12.12.12的服务器上，端口为12555，则应将其更改为 ws://12.12.12.12:12555/live/update
-      - WS_API_URL=ws://localhost:12555/live/update
